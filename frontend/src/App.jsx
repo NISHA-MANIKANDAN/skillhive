@@ -10,7 +10,7 @@ const App = () => {
       <BrowserRouter>
         <div className="min-h-screen"> {/* Add a wrapper for full height */}
           <Navbar />
-          <div className="pt-24"> {/* Add padding for fixed navbar */}
+          <div className="pt-24  px-36"> {/* Add padding for fixed navbar */}
             <Routes>
               <Route path='/' element={<Home />} />
             </Routes>
