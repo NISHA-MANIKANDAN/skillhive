@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:wght@400;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+font-family:Outfit;
+}
+.active hr{
+  @apply block
+}
+::-webkit-scrollbar {
+  @apply hidden /* Hide the scrollbar */
+}
+/* App.css or global.css */
+@media (max-width: 740px) {
+  .active p {
+    @apply text-white bg-cyan-600;
+  }
+}
