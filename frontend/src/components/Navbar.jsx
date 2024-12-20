@@ -20,10 +20,11 @@ const Navbar = () => {
 <div className='fixed top-0 left-0 right-0 bg-white z-40 flex items-center justify-between text-sm py-4 mb-5'>
   {/* Align SkillHive to the left */}
  
-  <h1 className="text-4xl ml-28 font-semibold text-brown tracking-wider drop-shadow-md flex-grow-0">
-    SkillHive
-  </h1>
-
+  <NavLink to="/" className="no-underline">
+        <h1 className="text-4xl ml-28 font-semibold text-brown tracking-wider drop-shadow-md flex-grow-0 cursor-pointer">
+          SkillHive
+        </h1>
+      </NavLink>
   {/* Desktop Navigation Links */}
   <ul className='hidden md:flex mr-16 items-center gap-8 font-medium ml-auto'>
     {/* 'How It Works' link */}
