@@ -2,6 +2,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import Navbar from "./components/Navbar";
 import Home from './pages/Home';
+import HowItWorks from './pages/HowItWorks';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 import store from './store/store/store';
 import Footer from "./components/Footer";
 
@@ -16,7 +19,10 @@ const App = () => {
           {/* Main Content */}
           <main className="flex-grow pt-24 px-36">
             <Routes>
-              <Route path='/' element={<Home />} />
+              <Route path="/" element={<Home />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
             </Routes>
           </main>
           {/* Footer */}
