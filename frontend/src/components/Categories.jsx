@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom"; // Import NavLink from react-router-dom
+import { NavLink } from "react-router-dom";
 
 const Categories = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for side menu toggle
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
   const categories = [
     { id: 1, name: "Tutoring" },

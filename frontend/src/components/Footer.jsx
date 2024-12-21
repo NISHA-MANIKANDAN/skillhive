@@ -1,11 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux"; // Import Redux hook to access state
+import { useSelector } from "react-redux"; 
 import footerImage from "../assets/assets_frontend/footer.jpg";
 
 const Footer = () => {
-  // Access Redux state
-  const user = useSelector((state) => state.user); // Replace `state.user` with your store slice
-  const isAuthenticated = useSelector((state) => state.auth.token !== null); // Check if the user is logged in
+  
+  const user = useSelector((state) => state.user); 
+  const isAuthenticated = useSelector((state) => state.auth.token !== null); 
 
   return (
     <footer className="bg-gray-100 py-8">

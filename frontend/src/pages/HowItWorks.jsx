@@ -30,9 +30,9 @@ const HowItWorks = () => {
             ></iframe>
           </div>
           <section className="mb-8 lg:mb-12">
-            <h2 className="text-3xl font-semibold mb-4 sm:text-2xl">What is Clascity</h2>
+            <h2 className="text-3xl font-semibold mb-4 sm:text-2xl">What is SkillHive</h2>
             <p className="text-lg leading-7 sm:text-base">
-              Clascity is created for everyone to share their talents and for
+              SkillHive is created for everyone to share their talents and for
               those who want to learn to find the best teachers in their
               community. Want to play the guitar but don't know how? Or see a
               beautiful handmade jewelry piece and wonder how it's created? No
@@ -43,11 +43,11 @@ const HowItWorks = () => {
 
           {/* Teaching on Clascity Section */}
           <section className="mb-8 lg:mb-12">
-            <h2 className="text-3xl font-semibold mb-4 sm:text-2xl">Teaching on Clascity</h2>
+            <h2 className="text-3xl font-semibold mb-4 sm:text-2xl">Teaching on SkillHive</h2>
             <p className="text-lg leading-7 sm:text-base">
-              Who doesn’t like things that are good and cheap? Clascity is just
+              Who doesn’t like things that are good and cheap? SkillHive is just
               that. As fellow tutors, we understand that fees are annoying, and
-              that’s why we’re trying to offer as much as possible for as little
+              that's why we’re trying to offer as much as possible for as little
               as possible. We’ve built features such as booking, scheduling,
               payment, performance tracking, and review that will help you succeed
               as a tutor. All that for an 8% commission fee (free for students).
