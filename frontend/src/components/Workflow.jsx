@@ -10,7 +10,7 @@ const Workflow = () => {
           Unlock Your Full Potential Through Skill Sharing
         </h1>
         <p className="text-lg text-gray-600 leading-relaxed">
-          Discover the power of shared knowledge and expertise. SkillHive connects you with the right people and resources to help you learn, grow, and achieve your goals. Whether you're mastering a new skill or refining your craft, our platform ensures you have the support to succeed. Your journey to greatness starts here.
+          Discover the power of shared knowledge and expertise. SkillHive connects you with the right people and resources to help you learn, grow, and achieve your goals. Whether you&apos;re mastering a new skill or refining your craft, our platform ensures you have the support to succeed. Your journey to greatness starts here.
         </p>
         <Link to="/how-it-works" className="inline-block mt-6 text-blue-600 hover:text-blue-800 font-medium text-lg">
           Learn How It Works
