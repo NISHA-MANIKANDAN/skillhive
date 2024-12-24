@@ -10,9 +10,9 @@ font-family:Outfit;
   @apply block
 }
 ::-webkit-scrollbar {
-  @apply hidden /* Hide the scrollbar */
+  @apply hidden 
 }
-/* App.css or global.css */
+
 @media (max-width: 740px) {
   .active p {
     @apply text-white bg-cyan-600;

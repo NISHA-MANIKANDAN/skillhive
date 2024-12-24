@@ -1,67 +1,38 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectCategory } from "../store/slice/blogSclice";
 
 const Categories = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const categories = useSelector((state) => state.blog.categories);
+  const selectedCategoryId = useSelector((state) => state.blog.selectedCategoryId);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const categories = [
-    { id: 1, name: "Tutoring" },
-    { id: 2, name: "Music" },
-    { id: 3, name: "Sports" },
-    { id: 4, name: "Languages" },
-    { id: 5, name: "Arts" },
-    { id: 6, name: "Digital" },
-  ];
+  const handleCategoryClick = (id) => {
+    dispatch(selectCategory(id));
+    navigate(`/blog?category_id=${id}`);
+  };
 
   return (
-    <aside className="bg-white shadow-md p-4 rounded-lg max-w-xs mx-auto">
-      {/* Categories Button for smaller screens */}
-      <div className="lg:hidden">
-        <button
-          onClick={() => setIsMenuOpen(!isMenuOpen)} // Toggle menu visibility
-          className="text-lg text-gray-700 hover:text-blue-500 transition w-full mb-4"
-        >
-          Categories
-        </button>
-
-        {/* Display the categories as buttons when the menu is open */}
-        {isMenuOpen && (
-          <div className="space-y-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                className="w-full py-2 text-lg text-gray-700 hover:text-blue-500 transition"
-              >
-                <NavLink
-                  to={`/blog?category_id=${category.id}`}
-                  activeClassName="text-blue-500"
-                  className="w-full hover:text-blue-500 transition"
-                >
-                  {category.name}
-                </NavLink>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* List of category buttons for larger screens */}
-      <ul className="hidden lg:block space-y-2">
+    <div className="bg-white shadow-md rounded-lg p-4">
+      <h2 className="text-xl font-bold mb-4 text-gray-900">Categories</h2>
+      <ul className="space-y-2">
         {categories.map((category) => (
           <li key={category.id}>
-            <button className="w-full py-2 text-lg text-gray-700 hover:text-blue-500 transition">
-              <NavLink
-                to={`/blog?category_id=${category.id}`}
-                activeClassName="text-blue-500"
-                className="w-full hover:text-blue-500 transition"
-              >
-                {category.name}
-              </NavLink>
+            <button
+              onClick={() => handleCategoryClick(category.id)}
+              className={`block text-left w-full px-4 py-2 rounded-md transition ${selectedCategoryId === category.id
+                  ? "text-blue-500 bg-blue-50"
+                  : "text-gray-700 hover:text-blue-500 hover:bg-gray-100"
+                }`}
+            >
+              {category.name}
             </button>
           </li>
         ))}
       </ul>
-    </aside>
+    </div>
   );
 };
 

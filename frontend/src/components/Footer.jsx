@@ -1,16 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux"; 
+import { useSelector } from "react-redux";
 import footerImage from "../assets/assets_frontend/footer.jpg";
 
 const Footer = () => {
-  
-  const user = useSelector((state) => state.user); 
-  const isAuthenticated = useSelector((state) => state.auth.token !== null); 
+  const user = useSelector((state) => state.user);
+  const isAuthenticated = useSelector((state) => state.auth.token !== null);
 
   return (
-    <footer className="bg-gray-100 py-8">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-wrap justify-between mb-6">
+    <footer className="bg-gray-100 py-8 w-full flex flex-col justify-between">
+      <div className="max-w-6xl mx-auto px-4 w-full">
+        {/* Main Content */}
+        <div className="flex flex-col sm:flex-row sm:justify-between mb-6">
           {/* About Section */}
           <div className="w-full sm:w-1/4 mb-4">
             <h4 className="text-lg font-semibold mb-2">About</h4>
@@ -41,13 +41,12 @@ const Footer = () => {
           </div>
 
           {/* Call to Action Section */}
-          <div className="w-full sm:w-1/4 flex flex-col items-center">
+          <div className="w-full sm:w-1/4 flex flex-col items-center mb-4">
             <img
               src={footerImage}
               alt="Illustration"
               className="w-20 h-20 mb-4"
             />
-
             <p className="text-center text-gray-800 mb-4">
               {isAuthenticated
                 ? `Welcome back, ${user?.name || "User"}!`
