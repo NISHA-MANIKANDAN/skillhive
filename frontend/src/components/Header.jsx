@@ -2,7 +2,7 @@ import { assets } from '/src/assets/assets_frontend/assets'; // Assuming the ima
 
 const Header = () => {
   return (
-    <div className="relativ text-brown flex items-center justify-between py-16 px-4 md:px-0 ">
+    <div className="relative text-brown flex items-center justify-between py-16 px-4 md:px-0 ">
       {/* Left Content */}
       <div className="text-center md:text-left md:w-1/2">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">Connect, Learn, Grow.</h1>

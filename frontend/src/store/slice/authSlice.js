@@ -1,51 +1,45 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice } from '@reduxjs/toolkit';
 
-const backendUrl = import.meta.env.VITE_BACKEND_URL; // Use Vite's env variables
-
-export const loginUser = createAsyncThunk(
-  'auth/loginUser',
-  async ({ email, password }, { rejectWithValue }) => {
-    try {
-      const response = await axios.post(`${backendUrl}/api/user/login`, { email, password });
-      return response.data.token;
-    } catch (error) {
-      return rejectWithValue(error.response?.data?.message || 'Login failed');
-    }
-  }
-);
+const initialState = {
+  token:  null,
+  user: JSON.parse(localStorage.getItem('user')) || null,
+  loading: false,
+  error: null,
+};
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    token: null,
-    loading: false,
-    error: null,
-  },
+  initialState,
   reducers: {
-    setToken: (state, action) => {
-      state.token = action.payload;
+    setCredentials: (state, action) => {
+      const { token, user } = action.payload;
+      state.token = token;
+      state.user = user;
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
     },
     logout: (state) => {
       state.token = null;
+      state.user = null;
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
     },
-  },
-  extraReducers: (builder) => {
-    builder
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.token = action.payload;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+    setLoading: (state, action) => {
+      state.loading = action.payload;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setToken, logout } = authSlice.actions;
+export const { setCredentials, logout, setLoading, setError } = authSlice.actions;
+
 export default authSlice.reducer;
+
+// Selectors
+export const selectCurrentUser = (state) => state.auth.user;
+export const selectToken = (state) => state.auth.token;
+export const selectIsAuthenticated = (state) => Boolean(state.auth.token);
+export const selectAuthLoading = (state) => state.auth.loading;
+export const selectAuthError = (state) => state.auth.error;

@@ -12,6 +12,9 @@ export default {
       gridTemplateColumns: {
         'auto': 'repeat(auto-fill, minmax(200px, 1fr))',
       },
+      animation: {
+        bounce: "bounce 2s infinite",
+      },
     },
   },
   plugins: [],

@@ -9,7 +9,7 @@ const initializePassport = () => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: 'http://localhost:4000',
+        callbackURL: 'http://localhost:4000/api/user/google/callback',
         passReqToCallback: true,
         proxy: true
       },

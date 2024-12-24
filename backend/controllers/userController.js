@@ -1,71 +1,131 @@
+import jwt from 'jsonwebtoken';
 import User from '../models/UserModel.js';
 
-
-// Helper function to generate JWT
-const generateToken = (user) => {
-  return jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+// Helper function to generate JWT token
+const generateToken = (userId) => {
+  const secretKey = process.env.JWT_SECRET || 'defaultSecret'; // Use an environment variable for security
+  const token = jwt.sign({ id: userId }, secretKey, { expiresIn: '24h' });
+  return token;
 };
+
 
 export const signup = async (req, res) => {
+  try {
     const { username, email, password } = req.body;
-  
-    if (!username || !email || !password) {
-      return res.status(400).json({ message: 'Username, email, and password are required' });
-    }
-  
-    // Check if the user already exists
+    
+    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({
+        success: false,
+        message: 'User already exists'
+      });
     }
-  
-    const newUser = new User({ username, email, password });
-    await newUser.save();
-  
-    const token = generateToken(newUser);
-    res.status(201).json({ message: 'Signup successful', token });
-  };
-  
 
-// Login Controller (for password-based login)
+    // Create new user
+    const user = await User.create({
+      username,
+      email,
+      password
+    });
+    
+    // Generate token
+    const token = generateToken(user);
+
+    res.status(201).json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
 export const login = async (req, res) => {
-  const { email, password } = req.body;
-  
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(400).json({ message: 'User not found' });
-  }
+  try {
+    const { email, password } = req.body;
 
-  // Compare password
-  const isMatch = await user.comparePassword(password);
-  if (!isMatch) {
-    return res.status(400).json({ message: 'Invalid credentials' });
-  }
+    // Log request payload
+    console.log('Login request received:', req.body);
 
-  const token = generateToken(user);
-  res.json({ message: 'Login successful', token });
-};
+    // Find user and explicitly include password in the query
+    const user = await User.findOne({ email }).select('+password');
 
-// Google OAuth Callback (for OAuth login)
-export const googleCallback = (req, res) => {
-  const token = generateToken(req.user);
-  res.json({ message: 'Login successful with Google', token });
-};
-import jwt from 'jsonwebtoken';
+    // Log user details fetched from the database
+    console.log('User fetched from database:', user);
 
-const authenticateJWT = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
-  if (!token) {
-    return res.status(403).json({ message: 'Access denied' });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(403).json({ message: 'Invalid token' });
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password',
+      });
     }
-    req.user = user;
-    next();
-  });
+
+    // Check password
+    console.log('Checking password match...');
+    const isPasswordMatch = await user.comparePassword(password);
+
+    if (!isPasswordMatch) {
+      return res.status(401).json({
+        success: false,
+        message: 'Invalid email or password',
+      });
+    }
+
+    // Generate token
+    const token = generateToken(user._id);
+
+    res.json({
+      success: true,
+      token,
+      user: {
+        id: user._id,
+        name: user.username,
+        email: user.email,
+      },
+    });
+  } catch (error) {
+    console.error('Error in login function:', error.message);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 };
 
-export default authenticateJWT;
+export const googleCallback = async (req, res) => {
+  try {
+    // Generate token for the authenticated user
+    const token = generateToken(req.user);
+
+    res.send(`
+      <script>
+        if (window.opener) {
+          window.opener.postMessage(${JSON.stringify({
+            token,
+            user: {
+              id: req.user._id,
+              name: req.user.name,
+              email: req.user.email
+            }
+          })}, "${process.env.FRONTEND_URL}");
+          window.close();
+        } else {
+          window.location.href = "${process.env.FRONTEND_URL}";
+        }
+      </script>
+    `);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};

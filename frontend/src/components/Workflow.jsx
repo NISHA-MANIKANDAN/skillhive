@@ -3,7 +3,7 @@ import { assets } from '/src/assets/assets_frontend/assets';
 
 const Workflow = () => {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-end md:pr-32 py-60 bg-white">
+    <div className="flex flex-col md:flex-row items-center justify-end md:pr-32 pt-56 bg-white">
       {/* Left Content */}
       <div className="md:w-1/2 text-center md:text-right pr-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
