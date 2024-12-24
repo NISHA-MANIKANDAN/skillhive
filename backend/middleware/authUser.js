@@ -1,5 +1,6 @@
 // authUser.js
 import jwt from 'jsonwebtoken';
+import { generateToken } from '../controllers/userController.js';
 
 const authenticateJWT = (req, res, next) => {
   try {
@@ -29,7 +30,7 @@ const authenticateJWT = (req, res, next) => {
         });
       }
       
-      req.user = decoded;
+      req.user = { id: decoded.id };
       next();
     });
   } catch (error) {

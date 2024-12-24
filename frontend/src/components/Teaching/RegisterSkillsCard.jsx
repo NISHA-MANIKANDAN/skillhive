@@ -1,37 +1,44 @@
-import React from "react";
-import "aos/dist/aos.css";
+import { useEffect } from "react";
 import AOS from "aos";
-import { assets } from "/src/assets/assets_frontend/assets"; 
+import "aos/dist/aos.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectIsAuthenticated } from "../../store/slice/authSlice";
 
 const RegisterSkillsCard = () => {
-  // Initialize AOS animations
-  React.useEffect(() => {
+  const navigate = useNavigate();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
+  useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
 
+  const handleStartNow = () => {
+    if (isAuthenticated) {
+      navigate("/register-skills"); // Redirect to the register-skills page
+    } else {
+      navigate("/sign-in", { state: { from: "/register-skills" } }); // Pass target route to sign-in
+    }
+  };
+
   return (
-    <div
-      className="w-full max-w-md bg-white border border-gray-200 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 mb-8"
-      data-aos="fade-up"
-      data-aos-delay="100"
-    >
-      <div className="flex flex-row items-center p-6 space-x-6">
-        <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white">
-          <img src={assets.bulb} alt="Register Skills Icon" className="w-10 h-10" />
-        </div>
-        <div className="flex flex-col space-y-4">
-          <h3 className="text-2xl font-semibold text-gray-800">Register Skills</h3>
-          <p className="text-gray-600">
-            Add your skills to track your progress and showcase your expertise to others.
+    <div data-aos="fade-up" className="w-full max-w-4xl mx-auto mb-16">
+      <div className="flex flex-col sm:flex-row items-center justify-between">
+        <div className="sm:order-2 mb-4 sm:mb-0">
+          <h3 className="text-xl sm:text-2xl font-semibold text-center sm:text-right">
+            Register Skills
+          </h3>
+          <p className="text-gray-600 hidden sm:block text-right">
+            Add your skills to track your progress and showcase your expertise.
           </p>
-          <a
-            href="/register-skills"
-            className="mt-4 bg-blue-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-blue-700 transition"
-            data-aos="fade-up"
-            data-aos-delay="200"
+        </div>
+        <div className="sm:order-1">
+          <button
+            onClick={handleStartNow}
+            className="inline-block bg-gray-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-gray-700 transition-colors duration-300"
           >
             Start Now
-          </a>
+          </button>
         </div>
       </div>
     </div>

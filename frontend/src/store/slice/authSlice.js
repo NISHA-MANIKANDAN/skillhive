@@ -1,8 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+const getUserFromStorage = () => {
+  try {
+    return JSON.parse(localStorage.getItem('user')) || null;
+  } catch {
+    return null;
+  }
+};
+
 const initialState = {
-  token:  null,
-  user: JSON.parse(localStorage.getItem('user')) || null,
+  token: sessionStorage.getItem('token') || null,
+  user: getUserFromStorage(),
   loading: false,
   error: null,
 };
@@ -15,14 +23,18 @@ const authSlice = createSlice({
       const { token, user } = action.payload;
       state.token = token;
       state.user = user;
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
+      sessionStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user)); // User persists across sessions
     },
     logout: (state) => {
       state.token = null;
       state.user = null;
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
       localStorage.removeItem('user');
+    },
+    rehydrateAuth: (state) => {
+      state.token = sessionStorage.getItem('token') || null;
+      state.user = getUserFromStorage();
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -33,7 +45,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setCredentials, logout, setLoading, setError } = authSlice.actions;
+export const { setCredentials, logout, rehydrateAuth, setLoading, setError } = authSlice.actions;
 
 export default authSlice.reducer;
 

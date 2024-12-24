@@ -2,12 +2,11 @@ import jwt from 'jsonwebtoken';
 import User from '../models/UserModel.js';
 
 // Helper function to generate JWT token
-const generateToken = (userId) => {
+export const generateToken = (userId) => {
   const secretKey = process.env.JWT_SECRET || 'defaultSecret'; // Use an environment variable for security
   const token = jwt.sign({ id: userId }, secretKey, { expiresIn: '24h' });
   return token;
 };
-
 
 export const signup = async (req, res) => {
   try {

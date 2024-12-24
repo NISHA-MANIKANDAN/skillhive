@@ -7,6 +7,8 @@ import userRouter from './routes/userRoute.js';
 import passport from 'passport';
 import session from 'express-session';
 import initializePassport from './config/passportConfig.js';
+import skillRoutes from './routes/skillRoutes.js'
+
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -44,6 +46,7 @@ app.use(passport.session());
 
 // Routes
 app.use('/api/user', userRouter);
+app.use('/api/skills', skillRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
