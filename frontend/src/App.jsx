@@ -8,6 +8,10 @@ import Login from "./pages/Login";
 import Teaching from "./pages/Teaching";
 import RegisterSkills from "./pages/Registerskills";
 import { PersistGate } from 'redux-persist/integration/react';
+import HowItWorks from "./pages/HowItworks";
+import ClassListingPage from "./pages/ClassListingPage";
+import TutorPage from "./pages/Tutorpage";
+import Blog from "./pages/Blog";
 
 const App = () => {
   return (
@@ -23,6 +27,10 @@ const App = () => {
              <Route path="/sign-in" element={<Login />} />
              <Route path="/teaching-page" element={<Teaching />} />
              <Route path="/register-skills" element={<RegisterSkills />} />
+             <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/classes" element={<ClassListingPage />} />
+              <Route path="/tutorpage/:id" element={<TutorPage />} />
+              <Route path="/blog" element={<Blog/>} /> 
 
             </Routes>
           </div>

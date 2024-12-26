@@ -1,21 +1,34 @@
-// src/store/store.js
+// store.js
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../slice/authSlice.js'; // Correct path here
+import authReducer from '../slice/authSlice.js';
 import formReducer from '../slice/skillSlice.js';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // defaults to localStorage
+import blogReducer from '../slice/blogSlice.js';
+import { persistStore, persistCombineReducers } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'], // Persist only the auth slice
+  whitelist: ['auth']
 };
-const persistedReducer = persistReducer(persistConfig, authReducer);
-const store = configureStore({
-  reducer: {
-    auth: persistedReducer,
-    form: formReducer,
-  },
-});
-export const persistor = persistStore(store);
 
+const rootReducer = {
+  auth: authReducer,
+  form: formReducer,
+  blog: blogReducer
+};
+
+const persistedReducer = persistCombineReducers(persistConfig, rootReducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE', 'persist/REGISTER']
+      }
+    })
+});
+
+export const persistor = persistStore(store);
 export default store;
