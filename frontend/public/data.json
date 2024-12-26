@@ -1,0 +1,292 @@
+[
+  {
+    "id": 1,
+    "profile": {
+      "name": "Yoga for Beginners",
+      "title": "Online",
+      "experience": "5 years of teaching yoga",
+      "profileImage": "https://via.placeholder.com/100",
+      "ctaButton": {
+        "text": "Sign up for the class",
+        "action": "signup"
+      }
+    },
+    "classDetails": {
+      "title": "Yoga for Beginners",
+      "summary": "A beginner-friendly yoga class designed to improve flexibility and mindfulness.",
+      "description": [
+        "This class is perfect for those new to yoga and aims to increase flexibility, strength, and mindfulness.",
+        "Guided step-by-step instructions help you build a solid foundation in yoga techniques."
+      ],
+      "rates": [
+        {
+          "type": "Full Course",
+          "price": "$50"
+        }
+      ],
+      "extras": {
+        "trialLesson": "First lesson free!",
+        "contact": {
+          "phone": "123-456-7890",
+          "website": "http://www.yogaforbeginners.com"
+        }
+      }
+    },
+    "location": {
+      "title": "Class Location",
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "map": {
+        "iframeSrc": "https://www.google.com/maps/embed?...",
+        "width": "600",
+        "height": "400"
+      }
+    },
+    "faq": [
+      {
+        "question": "Do I need prior yoga experience?",
+        "answer": "No, this course is designed for beginners with no prior experience."
+      },
+      {
+        "question": "What should I bring to the class?",
+        "answer": "A yoga mat, comfortable clothing, and water are recommended."
+      },
+      {
+        "question": "Is the class suitable for people with injuries?",
+        "answer": "Please consult your physician and notify the instructor before joining."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "profile": {
+      "name": "Advanced Coding Bootcamp",
+      "title": "San Francisco, CA",
+      "experience": "10 years in software development",
+      "profileImage": "https://via.placeholder.com/100",
+      "ctaButton": {
+        "text": "Sign up for the bootcamp",
+        "action": "signup"
+      }
+    },
+    "classDetails": {
+      "title": "Advanced Coding Bootcamp",
+      "summary": "An intensive course for experienced programmers to enhance their coding skills.",
+      "description": [
+        "This bootcamp is designed for developers seeking to deepen their understanding of coding and development practices.",
+        "Learn advanced techniques, frameworks, and best practices in a collaborative and immersive environment."
+      ],
+      "rates": [
+        {
+          "type": "Full Course",
+          "price": "$1200"
+        }
+      ],
+      "extras": {
+        "trialLesson": "First lesson free!",
+        "contact": {
+          "phone": "123-456-7890",
+          "website": "http://www.codingbootcamp.com"
+        }
+      }
+    },
+    "location": {
+      "title": "Course Location",
+      "latitude": 37.7749,
+      "longitude": -122.4194,
+      "map": {
+        "iframeSrc": "https://www.google.com/maps/embed?...",
+        "width": "600",
+        "height": "400"
+      }
+    },
+    "faq": [
+      {
+        "question": "What prior knowledge is required?",
+        "answer": "You should have at least 1-2 years of programming experience."
+      },
+      {
+        "question": "What programming languages will be covered?",
+        "answer": "The bootcamp covers Python, JavaScript, and popular frameworks like React."
+      },
+      {
+        "question": "Are job placement services included?",
+        "answer": "Yes, we offer resume reviews and job placement assistance after the course."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "profile": {
+      "name": "Creative Writing Workshop",
+      "title": "Online",
+      "experience": "3 years of creative writing",
+      "profileImage": "https://via.placeholder.com/100",
+      "ctaButton": {
+        "text": "Join the workshop",
+        "action": "signup"
+      }
+    },
+    "classDetails": {
+      "title": "Creative Writing Workshop",
+      "summary": "A workshop focused on improving storytelling and writing skills.",
+      "description": [
+        "This workshop helps writers refine their storytelling abilities and master narrative techniques.",
+        "Interactive sessions and personalized feedback ensure continuous improvement."
+      ],
+      "rates": [
+        {
+          "type": "Workshop",
+          "price": "$80"
+        }
+      ],
+      "extras": {
+        "trialLesson": "N/A",
+        "contact": {
+          "phone": "123-456-7891",
+          "website": "http://www.writingworkshop.com"
+        }
+      }
+    },
+    "location": {
+      "title": "Workshop Location",
+      "latitude": 40.7128,
+      "longitude": -74.0060,
+      "map": {
+        "iframeSrc": "https://www.google.com/maps/embed?...",
+        "width": "600",
+        "height": "400"
+      }
+    },
+    "faq": [
+      {
+        "question": "What genres of writing are covered?",
+        "answer": "The workshop focuses on fiction, non-fiction, and poetry."
+      },
+      {
+        "question": "Is this suitable for beginners?",
+        "answer": "Yes, we welcome writers at all skill levels."
+      },
+      {
+        "question": "Will I get personalized feedback?",
+        "answer": "Yes, every participant receives individual feedback from the instructor."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "profile": {
+      "name": "Photography for Beginners",
+      "title": "Los Angeles, CA",
+      "experience": "8 years of photography",
+      "profileImage": "https://via.placeholder.com/100",
+      "ctaButton": {
+        "text": "Sign up for the class",
+        "action": "signup"
+      }
+    },
+    "classDetails": {
+      "title": "Photography for Beginners",
+      "summary": "Learn the basics of photography and capture beautiful images.",
+      "description": [
+        "This course is ideal for aspiring photographers who want to learn camera settings, lighting, and composition.",
+        "Hands-on activities help students develop essential photography skills."
+      ],
+      "rates": [
+        {
+          "type": "Full Course",
+          "price": "$150"
+        }
+      ],
+      "extras": {
+        "trialLesson": "Contact for availability",
+        "contact": {
+          "phone": "123-456-7892",
+          "website": "http://www.photographybasics.com"
+        }
+      }
+    },
+    "location": {
+      "title": "Course Location",
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "map": {
+        "iframeSrc": "https://www.google.com/maps/embed?...",
+        "width": "600",
+        "height": "400"
+      }
+    },
+    "faq": [
+      {
+        "question": "Do I need a professional camera?",
+        "answer": "No, you can start with any camera, including a smartphone."
+      },
+      {
+        "question": "Will there be outdoor photography sessions?",
+        "answer": "Yes, the course includes outdoor practice sessions."
+      },
+      {
+        "question": "Are there group activities?",
+        "answer": "Yes, we encourage collaborative projects and group learning."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "profile": {
+      "name": "Business Management Essentials",
+      "title": "Online",
+      "experience": "12 years in business management",
+      "profileImage": "https://via.placeholder.com/100",
+      "ctaButton": {
+        "text": "Join the course",
+        "action": "signup"
+      }
+    },
+    "classDetails": {
+      "title": "Business Management Essentials",
+      "summary": "A comprehensive course on leadership, strategy, and business management.",
+      "description": [
+        "Learn to develop effective strategies and improve leadership skills to excel in the business world.",
+        "This course covers key topics like organizational structure, financial planning, and risk management."
+      ],
+      "rates": [
+        {
+          "type": "Full Course",
+          "price": "$250"
+        }
+      ],
+      "extras": {
+        "trialLesson": "N/A",
+        "contact": {
+          "phone": "123-456-7893",
+          "website": "http://www.businessessentials.com"
+        }
+      }
+    },
+    "location": {
+      "title": "Course Location",
+      "latitude": 36.7783,
+      "longitude": -119.4179,
+      "map": {
+        "iframeSrc": "https://www.google.com/maps/embed?...",
+        "width": "600",
+        "height": "400"
+      }
+    },
+    "faq": [
+      {
+        "question": "Do I need prior business experience?",
+        "answer": "No, this course is designed for beginners and intermediate learners."
+      },
+      {
+        "question": "What topics are covered?",
+        "answer": "Topics include leadership, financial planning, strategy, and risk management."
+      },
+      {
+        "question": "Are there networking opportunities?",
+        "answer": "Yes, the course includes online networking sessions."
+      }
+    ]
+  }
+]

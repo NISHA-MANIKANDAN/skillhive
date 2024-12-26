@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import HowItWorks from "./pages/HowItWorks";
 import Footer from "./components/Footer";
 import store from "./store/store/store"; 
+import ClassListingPage from "./pages/ClassListingPage"
+import TutorPage from "./pages/TutorPage";
+
 
 const App = () => {
   return (
@@ -21,6 +24,9 @@ const App = () => {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/classes" element={<ClassListingPage />} />
+              <Route path="/tutorpage/:id" element={<TutorPage />} />
+              
             </Routes>
           </main>
 
