@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const SkillCards = ({ skills = [] }) => {
   const [selectedSkill, setSelectedSkill] = useState(null);
@@ -10,7 +11,6 @@ const SkillCards = ({ skills = [] }) => {
           <h2 className="text-xl font-semibold">{skill.skillName}</h2>
           <p className="text-gray-600 text-sm">Instructor: {skill.staffName}</p>
 
-          {/* View Details Button */}
           <button
             className="text-blue-500 text-sm hover:underline mt-2 block"
             onClick={() => setSelectedSkill(skill)}
@@ -18,29 +18,22 @@ const SkillCards = ({ skills = [] }) => {
             View Details
           </button>
 
-          {/* Book Staff Button */}
           <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md text-sm hover:bg-blue-700 transition">
             Book Staff
           </button>
         </div>
       ))}
 
-      {/* Modal */}
       {selectedSkill && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center p-4">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
             <h2 className="text-2xl font-bold">{selectedSkill.skillName}</h2>
             <p className="text-gray-600">{selectedSkill.description}</p>
-
-            {/* Instructor */}
             <p className="mt-2"><strong>Instructor:</strong> {selectedSkill.staffName}</p>
-
-            {/* Location */}
-            <p><strong>Location:</strong> {selectedSkill.location.city}, {selectedSkill.location.country}  
+            <p>
+              <strong>Location:</strong> {selectedSkill.location.city}, {selectedSkill.location.country}
               {selectedSkill.location.isOnline && " (Online Available)"}
             </p>
-
-            {/* Availability */}
             <p className="mt-2"><strong>Availability:</strong></p>
             <ul className="ml-4 list-disc text-sm">
               {selectedSkill.availability.map((slot, index) => (
@@ -49,12 +42,8 @@ const SkillCards = ({ skills = [] }) => {
                 </li>
               ))}
             </ul>
-
-            {/* Fees */}
             <p className="mt-2"><strong>Class Length:</strong> {selectedSkill.fees.classLength}</p>
             <p><strong>Price:</strong> ${selectedSkill.fees.price}</p>
-
-            {/* Curriculum */}
             <p className="mt-2"><strong>Curriculum:</strong></p>
             <ul className="ml-4 list-disc text-sm">
               {selectedSkill.curriculum.lessons.map((lesson, index) => (
@@ -63,8 +52,6 @@ const SkillCards = ({ skills = [] }) => {
                 </li>
               ))}
             </ul>
-
-            {/* Buttons */}
             <div className="flex justify-between mt-4">
               <button
                 className="bg-gray-500 text-white px-4 py-2 rounded-md text-sm hover:bg-gray-600 transition"
@@ -81,6 +68,43 @@ const SkillCards = ({ skills = [] }) => {
       )}
     </div>
   );
+};
+
+// ✅ Add PropTypes
+SkillCards.propTypes = {
+  skills: PropTypes.arrayOf(
+    PropTypes.shape({
+      skillName: PropTypes.string.isRequired,
+      staffName: PropTypes.string.isRequired,
+      description: PropTypes.string,
+      location: PropTypes.shape({
+        city: PropTypes.string,
+        country: PropTypes.string,
+        isOnline: PropTypes.bool,
+      }),
+      availability: PropTypes.arrayOf(
+        PropTypes.shape({
+          fromDay: PropTypes.string,
+          toDay: PropTypes.string,
+          fromTime: PropTypes.string,
+          toTime: PropTypes.string,
+        })
+      ),
+      fees: PropTypes.shape({
+        classLength: PropTypes.string,
+        price: PropTypes.number,
+      }),
+      curriculum: PropTypes.shape({
+        lessons: PropTypes.arrayOf(
+          PropTypes.shape({
+            title: PropTypes.string,
+            objective: PropTypes.string,
+            description: PropTypes.string,
+          })
+        ),
+      }),
+    })
+  ),
 };
 
 export default SkillCards;
