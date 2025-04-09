@@ -8,7 +8,7 @@ import Login from "./pages/Login";
 import Teaching from "./pages/Teaching";
 import RegisterSkills from "./pages/RegisterSkills";
 import { PersistGate } from 'redux-persist/integration/react';
-import HowItWorks from "./pages/HowItworks";
+import HowItWorks from "./pages/HowItWorks";
 import ClassListingPage from "./pages/ClassListingPage";
 import TutorPage from "./pages/Tutorpage";
 import Blog from "./pages/Blog";
