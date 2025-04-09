@@ -2,7 +2,7 @@ import ErrorBoundary from "../components/Error";
 import Header from "../components/Header";
 import LiveLocationPage from "../components/Learning/Livelocation";
 import TeachingHomePage from "../components/TeachingHomePage";
-import Workflow from "../components/workflow";
+import Workflow from "../components/Workflow";
 import LearningHomePage from "../components/Learning/LearningHomePage";
 
 const Home = () => {
