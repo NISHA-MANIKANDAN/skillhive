@@ -6,7 +6,7 @@ import store,{ persistor } from './store/store/store';
 import SignUp from "./pages/Signup";
 import Login from "./pages/Login";
 import Teaching from "./pages/Teaching";
-import RegisterSkills from "./pages/Registerskills";
+import RegisterSkills from "./pages/RegisterSkills";
 import { PersistGate } from 'redux-persist/integration/react';
 import HowItWorks from "./pages/HowItworks";
 import ClassListingPage from "./pages/ClassListingPage";
