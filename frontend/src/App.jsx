@@ -12,6 +12,11 @@ import HowItWorks from "./pages/HowItworks";
 import ClassListingPage from "./pages/ClassListingPage";
 import TutorPage from "./pages/Tutorpage";
 import Blog from "./pages/Blog";
+import Footer from "./components/Footer";
+import ProfilePage from "./pages/profile";
+import AllSkills from "./components/AllSkills"
+import LearningMenu from "./components/Learning/LearningMenu";
+import UpdateProfile from "./components/Learning/UpdateProfile";
 
 const App = () => {
   return (
@@ -30,10 +35,17 @@ const App = () => {
              <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/classes" element={<ClassListingPage />} />
               <Route path="/tutorpage/:id" element={<TutorPage />} />
-              <Route path="/blog" element={<Blog/>} /> 
+              <Route path="/blog" element={<Blog/>} />
+              <Route path="/profile" element={<ProfilePage/>} /> 
+              <Route path="/find-teachers" element={<AllSkills/>} /> 
+              <Route path="/learning-page" element={<LearningMenu/>} /> 
+             
+              <Route path="/update-profile" element={<UpdateProfile />} />
+
 
             </Routes>
           </div>
+          <Footer />
         </div>
         
       </BrowserRouter>

@@ -5,19 +5,30 @@ const API_URL = 'http://localhost:4000/api';
 
 export const createSkill = createAsyncThunk(
   'skills/create',
-  async (skillData, { rejectWithValue }) => {
+  async (skillData, { getState, rejectWithValue }) => {
     try {
+      // Get the token from the Redux state
+      const token = getState().auth.token;
+
+      if (!token) {
+        throw new Error('Token is missing. Please log in again.');
+      }
+
       const response = await axios.post(`${API_URL}/skills`, skillData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+        headers: { Authorization: `Bearer ${token}` },
       });
+
       return response.data;
     } catch (error) {
+      console.error('Error details:', error.response?.data);
       return rejectWithValue(error.response?.data?.error || 'Failed to create skill');
     }
   }
 );
 
 const initialState = {
+  name: '',
+  skill: '',
   location: {
     street: '',
     suite: '',
@@ -56,6 +67,13 @@ const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
+    setName: (state, action) => {
+      state.name = action.payload;
+    },
+    setSkill: (state, action) => {
+      state.skill = action.payload;
+    },
+    
     setLocation: (state, action) => {
       state.location = action.payload;
     },
@@ -100,6 +118,8 @@ const formSlice = createSlice({
 });
 
 export const {
+  setName,
+  setSkill,
   setLocation,
   setAvailability,
   setFees,

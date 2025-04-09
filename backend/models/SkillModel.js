@@ -7,6 +7,8 @@ const LessonSchema = new mongoose.Schema({
 
 const SkillSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  skillName: { type: String, required: true }, // ✅ Added Skill Name
+  staffName: { type: String, required: true }, // ✅ Added Staff Name
   location: {
     isOnline: { type: Boolean, default: false },
     street: { type: String },

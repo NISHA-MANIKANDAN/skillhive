@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout, selectCurrentUser, selectIsAuthenticated } from '/src/store/slice/authSlice';
+import { logout, selectCurrentUser, selectIsAuthenticated, rehydrateAuth } from '/src/store/slice/authSlice';
 import { User, LogOut, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
@@ -15,6 +15,17 @@ const Navbar = () => {
   const isAuthenticated = useSelector(selectIsAuthenticated);
   const currentUser = useSelector(selectCurrentUser);
 
+  // Check and sync auth state on mount and when token changes
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    console.log('Current token in session:', token || 'none');
+    
+    if (!token) {
+      console.log('No token found, ensuring unauthenticated state');
+      dispatch(logout());
+    }
+  }, [dispatch]);
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -27,9 +38,17 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setShowMenu(false);
+  }, [location.pathname]);
+
   const handleLogout = () => {
+    console.log('Initiating logout');
+    sessionStorage.clear();
     dispatch(logout());
     setShowDropdown(false);
+    setShowMenu(false);
     navigate('/');
   };
 
@@ -53,7 +72,7 @@ const Navbar = () => {
               How It Works
             </NavLink>
 
-            {isAuthenticated ? (
+            {isAuthenticated && currentUser ? (
               // Profile Dropdown (Desktop)
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -137,7 +156,7 @@ const Navbar = () => {
               How It Works
             </NavLink>
 
-            {isAuthenticated ? (
+            {isAuthenticated && currentUser ? (
               <>
                 <NavLink
                   to="/profile"

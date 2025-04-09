@@ -1,6 +1,6 @@
-import React from "react";
+
 import { useSelector } from "react-redux";
-import footerImage from "../assets/assets_frontend/footer.jpg";
+import { assets } from '/src/assets/assets_frontend/assets';
 
 const Footer = () => {
   const user = useSelector((state) => state.user);
@@ -43,7 +43,7 @@ const Footer = () => {
           {/* Call to Action Section */}
           <div className="w-full sm:w-1/4 flex flex-col items-center mb-4">
             <img
-              src={footerImage}
+              src={assets.learntogether}
               alt="Illustration"
               className="w-20 h-20 mb-4"
             />

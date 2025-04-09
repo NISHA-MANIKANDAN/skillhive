@@ -8,6 +8,8 @@ import passport from 'passport';
 import session from 'express-session';
 import initializePassport from './config/passportConfig.js';
 import skillRoutes from './routes/skillRoutes.js'
+import chatbotRoute from './routes/chatbotRoute.js';
+
 
 
 const app = express();
@@ -47,6 +49,7 @@ app.use(passport.session());
 // Routes
 app.use('/api/user', userRouter);
 app.use('/api/skills', skillRoutes);
+app.use('/api/chatbot', chatbotRoute);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

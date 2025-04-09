@@ -159,7 +159,7 @@ const ClassListingPage = () => {
                   </button>
                 </div>
               </div>
-            </div>
+                        </div>
           ))}
         </div>
 

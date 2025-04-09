@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import LiveLocationPage from "../components/Learning/Livelocation";
 import TeachingHomePage from "../components/TeachingHomePage";
 import Workflow from "../components/workflow";
+import LearningHomePage from "../components/Learning/LearningHomePage";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
         <LiveLocationPage />
       </ErrorBoundary>
       <TeachingHomePage />
+      <LearningHomePage />
     </div>
   );
 };

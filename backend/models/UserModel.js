@@ -1,4 +1,3 @@
-// UserModel.js
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -24,9 +23,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Password is required'],
-    minLength: [6, 'Password must be at least 6 characters long'],
-    select: false
+    required: false // Password is not required for Google users
   },
   oauthProvider: {
     type: String,
@@ -36,15 +33,56 @@ const UserSchema = new mongoose.Schema({
   oauthId: {
     type: String,
     default: null
+  },
+  name: {
+    type: String,
+    default: null
+  },
+  avatar: {
+    type: String,
+    default: null
+  },
+  location: {
+    type: String,
+    default: null
+  },
+  company: {
+    type: String,
+    default: null
+  },
+  about: {
+    type: String,
+    default: null
+  },
+  skills: {
+    type: [String],
+    default: []
+  },
+
+  // 🔽 New ML-Driven Fields 🔽
+  learnerType: {
+    type: String,
+    enum: ['student', 'professional', 'industrialist'],
+    default: null
+  },
+  interests: {
+    type: [String], // e.g. ['AI', 'Web Development']
+    default: []
+  },
+  seeking: {
+    type: String,
+    enum: ['job', 'internship', 'higher-studies', 'upskilling', null],
+    default: null
   }
+
 }, {
   timestamps: true
 });
 
 // Hash password before saving
 UserSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) {
-    return next();
+  if (!this.isModified('password') || this.oauthProvider === 'google') {
+    return next(); // Skip password hashing for Google OAuth users
   }
   try {
     const salt = await bcrypt.genSalt(10);

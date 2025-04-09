@@ -7,10 +7,12 @@ import {
   addTimeSlot,
   addLesson,
   deleteLesson,
+  getAllSkills
 } from '../controllers/skillController.js';
 import authenticateJWT from '../middleware/authUser.js';
 
 const skillRouter = express.Router();
+skillRouter.get('/all', getAllSkills);
 
 // Create a new skill
 skillRouter.post('/', authenticateJWT, createSkill);

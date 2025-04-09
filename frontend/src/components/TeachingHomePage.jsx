@@ -9,7 +9,7 @@ const TeachingHomePage = () => {
   }, []);
 
   return (
-    <section className="flex flex-col items-center justify-center h-screen bg-gradient-to-r text-brown text-center px-4">
+    <section className="flex flex-col items-center justify-center h-[700px] bg-gradient-to-r text-brown text-center px-4">
       {/* Animated Icon */}
       <div className="mb-6" data-aos="zoom-in">
         <img

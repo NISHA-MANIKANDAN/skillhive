@@ -1,4 +1,13 @@
 import Skill from '../models/SkillModel.js'
+export const getAllSkills = async (req, res) => {
+  try {
+    const skills = await Skill.find(); // Fetch all skills
+    res.status(200).json(skills);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to fetch skills', error: error.message });
+  }
+};
+
 // Create a new skill
 export const createSkill = async (req, res) => {
     try {

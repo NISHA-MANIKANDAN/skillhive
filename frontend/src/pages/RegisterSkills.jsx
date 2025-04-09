@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+  setName,
+  setSkill,
   setLocation,
   setAvailability,
   setFees,
@@ -37,6 +39,8 @@ const RegistrationSkills = () => {
     e.preventDefault();
     if (validateForm()) {
       dispatch(createSkill({
+        staffName: formData.name, // Ensure staffName is included
+  skillName: formData.skill, // Ensure skillName is included
         location: formData.location,
         availability: formData.availability,
         fees: formData.fees,
@@ -98,7 +102,24 @@ const RegistrationSkills = () => {
 
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-xl font-semibold mb-6">Booking configurations</h2>
-
+        <div className="space-y-4">
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={formData.name}
+            onChange={(e) => dispatch(setName(e.target.value))}
+            className="w-full rounded-md border border-gray-300 p-2"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Skill Name"
+            value={formData.skill}
+            onChange={(e) => dispatch(setSkill(e.target.value))}
+            className="w-full rounded-md border border-gray-300 p-2"
+            required
+          />
+        </div>
         {/* Location Section */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
@@ -220,7 +241,7 @@ const RegistrationSkills = () => {
             <button
               type="button"
               onClick={() => dispatch(addTimeSlot())}
-              className="flex items-center text-blue-500 space-x-2"
+              className="flex items-center text-cyan-600 space-x-2"
             >
               <Plus size={20} />
               <span>Add time slot</span>
@@ -299,7 +320,7 @@ const RegistrationSkills = () => {
             <button
               type="button"
               onClick={() => dispatch(addLesson())}
-              className="flex items-center text-blue-500 space-x-2"
+              className="flex items-center text-cyan-600 space-x-2"
             >
               <Plus size={20} />
               <span>Add lesson</span>
@@ -311,7 +332,7 @@ const RegistrationSkills = () => {
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+            className="bg-primary text-white px-6 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
           >
             {status === 'loading' ? 'Creating...' : 'Create Skill'}
           </button>

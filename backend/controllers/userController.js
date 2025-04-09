@@ -1,45 +1,97 @@
 import jwt from 'jsonwebtoken';
 import User from '../models/UserModel.js';
+import { google } from 'googleapis';
 
 // Helper function to generate JWT token
 export const generateToken = (userId) => {
-  const secretKey = process.env.JWT_SECRET || 'defaultSecret'; // Use an environment variable for security
+  const secretKey = process.env.JWT_SECRET || 'defaultSecret';
   const token = jwt.sign({ id: userId }, secretKey, { expiresIn: '24h' });
   return token;
 };
 
 export const signup = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-    
-    // Check if user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: 'User already exists'
-      });
-    }
-
-    // Create new user
-    const user = await User.create({
+    const {
       username,
       email,
-      password
-    });
-    
-    // Generate token
-    const token = generateToken(user);
+      password,
+      googleToken,
+      learnerType,
+      interests,
+      seeking
+    } = req.body;
 
-    res.status(201).json({
-      success: true,
-      token,
-      user: {
-        id: user._id,
-        name: user.name,
-        email: user.email
+    if (googleToken) {
+      const client = new google.auth.OAuth2(process.env.GOOGLE_CLIENT_ID);
+      const ticket = await client.verifyIdToken({
+        idToken: googleToken,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+
+      let existingUser = await User.findOne({ email: payload.email });
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: 'User already exists'
+        });
       }
-    });
+
+      const user = new User({
+        username: payload.name || username,
+        email: payload.email,
+        googleId: payload.sub,
+        avatar: payload.picture,
+        learnerType,
+        interests,
+        seeking,
+      });
+
+      await user.save();
+
+      const token = generateToken(user._id);
+
+      return res.status(201).json({
+        success: true,
+        token,
+        user: {
+          id: user._id,
+          name: user.username,
+          email: user.email
+        }
+      });
+    } else {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: 'User already exists'
+        });
+      }
+
+      const user = new User({
+        username,
+        email,
+        password,
+        learnerType,
+        interests,
+        seeking,
+      });
+
+      await user.save();
+
+      const token = generateToken(user._id);
+
+      return res.status(201).json({
+        success: true,
+        token,
+        user: {
+          id: user._id,
+          name: user.username,
+          email: user.email
+        }
+      });
+    }
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -47,17 +99,14 @@ export const signup = async (req, res) => {
     });
   }
 };
+
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Log request payload
     console.log('Login request received:', req.body);
-
-    // Find user and explicitly include password in the query
     const user = await User.findOne({ email }).select('+password');
 
-    // Log user details fetched from the database
     console.log('User fetched from database:', user);
 
     if (!user) {
@@ -67,7 +116,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // Check password
     console.log('Checking password match...');
     const isPasswordMatch = await user.comparePassword(password);
 
@@ -78,7 +126,6 @@ export const login = async (req, res) => {
       });
     }
 
-    // Generate token
     const token = generateToken(user._id);
 
     res.json({
@@ -101,7 +148,6 @@ export const login = async (req, res) => {
 
 export const googleCallback = async (req, res) => {
   try {
-    // Generate token for the authenticated user
     const token = generateToken(req.user);
 
     res.send(`
@@ -125,6 +171,102 @@ export const googleCallback = async (req, res) => {
     res.status(500).json({
       success: false,
       message: error.message
+    });
+  }
+};
+
+export const getProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    console.log(req.user.id);
+
+    const user = await User.findById(userId).select('-password');
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({
+      message: 'Profile retrieved successfully',
+      user
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const {
+      name,
+      location,
+      company,
+      about,
+      skills,
+      avatar,
+      learnerType,
+      interests,
+      seeking
+    } = req.body;
+
+    if (
+      !name && !location && !company && !about &&
+      !skills && !avatar && !learnerType && !interests && !seeking
+    ) {
+      return res.status(400).json({
+        success: false,
+        message: 'No fields to update. Provide at least one field.',
+      });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          name: name || undefined,
+          location: location || undefined,
+          company: company || undefined,
+          about: about || undefined,
+          skills: skills || undefined,
+          avatar: avatar || undefined,
+          learnerType: learnerType || undefined,
+          interests: interests || undefined,
+          seeking: seeking || undefined,
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully.',
+      user: {
+        id: updatedUser._id,
+        name: updatedUser.username,
+        email: updatedUser.email,
+        location: updatedUser.location,
+        company: updatedUser.company,
+        about: updatedUser.about,
+        skills: updatedUser.skills,
+        avatar: updatedUser.avatar,
+        learnerType: updatedUser.learnerType,
+        interests: updatedUser.interests,
+        seeking: updatedUser.seeking,
+      },
+    });
+  } catch (error) {
+    console.error('Error updating profile:', error.message);
+    res.status(500).json({
+      success: false,
+      message: error.message,
     });
   }
 };
