@@ -17,6 +17,8 @@ import ProfilePage from "./pages/profile";
 import AllSkills from "./components/AllSkills"
 import LearningMenu from "./components/Learning/LearningMenu";
 import UpdateProfile from "./components/Learning/UpdateProfile";
+import CourseContentUpload from "./pages/CourseContentUpload";
+import CourseContent from "./components/Teaching/CourseContent";
 
 const App = () => {
   return (
@@ -41,6 +43,8 @@ const App = () => {
               <Route path="/learning-page" element={<LearningMenu/>} /> 
              
               <Route path="/update-profile" element={<UpdateProfile />} />
+              <Route path="/course-content/:id" element={<CourseContentUpload />} />
+              <Route path="/course-content-review/:id" element={<CourseContent />} />
 
 
             </Routes>

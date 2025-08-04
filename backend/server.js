@@ -9,6 +9,7 @@ import session from 'express-session';
 import initializePassport from './config/passportConfig.js';
 import skillRoutes from './routes/skillRoutes.js'
 import chatbotRoute from './routes/chatbotRoute.js';
+import courseRouter from './routes/courseRoutes.js';
 
 
 
@@ -24,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // CORS configuration
 app.use(cors({
-  origin: "http://localhost:5173", // Update this to match your frontend URL
+  origin: ["http://localhost:5173", "http://localhost:5174"],// Update this to match your frontend URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -50,6 +51,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/skills', skillRoutes);
 app.use('/api/chatbot', chatbotRoute);
+app.use('/api/courses', courseRouter);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

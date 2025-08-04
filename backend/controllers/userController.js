@@ -194,25 +194,14 @@ export const getProfile = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
 export const updateProfile = async (req, res) => {
   try {
     const userId = req.user.id;
-    const {
-      name,
-      location,
-      company,
-      about,
-      skills,
-      avatar,
-      learnerType,
-      interests,
-      seeking
-    } = req.body;
+    const { name, location, company, about, skills, avatar, learnerType, interests, seeking, bookedSkill } = req.body;
 
     if (
       !name && !location && !company && !about &&
-      !skills && !avatar && !learnerType && !interests && !seeking
+      !skills && !avatar && !learnerType && !interests && !seeking && !bookedSkill
     ) {
       return res.status(400).json({
         success: false,
@@ -220,19 +209,33 @@ export const updateProfile = async (req, res) => {
       });
     }
 
+    // First, retrieve the current user
+    const currentUser = await User.findById(userId);
+
+    if (!currentUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found.',
+      });
+    }
+
+    // Update the profile with the existing and new data
     const updatedUser = await User.findByIdAndUpdate(
       userId,
       {
         $set: {
-          name: name || undefined,
-          location: location || undefined,
-          company: company || undefined,
-          about: about || undefined,
-          skills: skills || undefined,
-          avatar: avatar || undefined,
-          learnerType: learnerType || undefined,
-          interests: interests || undefined,
-          seeking: seeking || undefined,
+          name: name || currentUser.name,
+          location: location || currentUser.location,
+          company: company || currentUser.company,
+          about: about || currentUser.about,
+          avatar: avatar || currentUser.avatar,
+          learnerType: learnerType || currentUser.learnerType,
+          interests: interests || currentUser.interests,
+          seeking: seeking || currentUser.seeking,
+        },
+        // If bookedSkill is provided, add it to the skills array
+        $addToSet: {
+          skills: bookedSkill || [],
         },
       },
       { new: true }
@@ -248,19 +251,7 @@ export const updateProfile = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Profile updated successfully.',
-      user: {
-        id: updatedUser._id,
-        name: updatedUser.username,
-        email: updatedUser.email,
-        location: updatedUser.location,
-        company: updatedUser.company,
-        about: updatedUser.about,
-        skills: updatedUser.skills,
-        avatar: updatedUser.avatar,
-        learnerType: updatedUser.learnerType,
-        interests: updatedUser.interests,
-        seeking: updatedUser.seeking,
-      },
+      user: updatedUser,
     });
   } catch (error) {
     console.error('Error updating profile:', error.message);

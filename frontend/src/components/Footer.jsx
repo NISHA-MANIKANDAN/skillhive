@@ -1,10 +1,11 @@
-
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom"; // <-- Import useNavigate
 import { assets } from '/src/assets/assets_frontend/assets';
 
 const Footer = () => {
   const user = useSelector((state) => state.user);
   const isAuthenticated = useSelector((state) => state.auth.token !== null);
+  const navigate = useNavigate(); // <-- Initialize navigate
 
   return (
     <footer className="bg-gray-100 py-8 w-full flex flex-col justify-between">
@@ -63,7 +64,7 @@ const Footer = () => {
             ) : (
               <button
                 className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-                onClick={() => console.log("Redirect to Sign Up")}
+                onClick={() => navigate('/sign-in')} // <-- Redirects to /login
               >
                 Sign Up to Teach
               </button>
